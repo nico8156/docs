@@ -1,0 +1,83 @@
+---
+title: "Améliorations envisagées (V2)"
+---
+
+# Améliorations envisagées (V2)
+
+Un système n’est jamais terminé.  
+Il évolue avec ses contraintes et ses usages.
+
+---
+
+## 1. Observabilité avancée
+
+Mettre en place :
+
+- Logs structurés
+- Correlation IDs entre contexts
+- Tracing distribué (OpenTelemetry)
+- Métriques sur la latence outbox / projection
+- Dashboard temps réel
+
+Objectif : rendre le système pleinement observable en production.
+
+---
+
+## 2. Versioning explicite des événements
+
+Introduire une stratégie formelle de versioning :
+
+- version des domain events
+- compatibilité backward
+- gestion d’évolution de schéma
+- migration progressive des projections
+
+Objectif : faciliter l’évolution à long terme.
+
+---
+
+## 3. Orchestration et sagas explicites
+
+Certaines interactions inter-contextes pourraient bénéficier :
+
+- d’une couche d’orchestration dédiée
+- de stratégies de compensation formalisées
+- d’un modèle clair pour les transactions longues
+
+Objectif : clarifier encore davantage les responsabilités.
+
+---
+
+## 4. Isolation multi-tenant
+
+En cas d’évolution vers un modèle multi-tenant :
+
+- isolation des projections
+- partitionnement des événements
+- séparation renforcée des données
+
+Objectif : préparer l’architecture à l’échelle.
+
+---
+
+## 5. Renforcement infrastructure
+
+- Pipeline CI/CD complet
+- Build automatisé des containers
+- Environnements éphémères pour les tests E2E
+- Monitoring des files Kafka
+
+Objectif : solidifier la dimension opérationnelle.
+
+---
+
+## Conclusion
+
+L’architecture actuelle est robuste et cohérente.
+
+Les axes d’amélioration visent principalement :
+
+- l’observabilité
+- la gouvernance des événements
+- l’évolutivité long terme
+- la maturité opérationnelle

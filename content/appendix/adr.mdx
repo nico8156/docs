@@ -1,0 +1,172 @@
+---
+title: "ADR"
+---
+
+---
+
+# Architecture Decision Records (ADR)
+
+Ce document synthétise les décisions structurantes du projet.
+
+Format :
+
+* **Contexte**
+* **Décision**
+* **Conséquences**
+
+---
+
+## ADR-001 — Séparation stricte Write / Read (CQRS)
+
+### Contexte
+
+Les interactions sociales (like, comment, ticket verification) nécessitent :
+
+* résilience
+* scalabilité
+* mise à jour temps réel
+* isolation métier
+
+Un modèle CRUD unifié aurait simplifié l’implémentation initiale.
+
+### Décision
+
+Adopter CQRS strict :
+
+* write model isolé
+* read model dénormalisé
+* projection via Kafka
+
+### Conséquences
+
+✅ Meilleure scalabilité
+✅ Rebuild possible des projections
+⚠️ Eventual consistency
+⚠️ Complexité accrue
+
+---
+
+## ADR-002 — Outbox persistée côté backend
+
+### Contexte
+
+La publication d’événements immédiatement après un write crée un risque :
+
+* crash entre DB et Kafka
+* double publication
+* incohérence d’état
+
+### Décision
+
+Introduire une table `outbox` transactionnelle :
+
+* write + event persistés ensemble
+* dispatcher asynchrone
+* retry avec backoff
+
+### Conséquences
+
+✅ Atomicité garantie
+✅ Delivery at-least-once
+⚠️ Latence légèrement accrue
+⚠️ Besoin de monitoring
+
+---
+
+## ADR-003 — Outbox côté client mobile
+
+### Contexte
+
+Le réseau mobile est instable.
+
+Un POST direct entraîne :
+
+* perte d’actions
+* UX incohérente
+* double soumission
+
+### Décision
+
+Mettre en place une Outbox locale persistée :
+
+* enqueue des commandes
+* retry exponentiel
+* squash intelligent
+* idempotence via commandId
+
+### Conséquences
+
+✅ UX fluide offline
+✅ Aucune perte d’action
+⚠️ Complexité front accrue
+⚠️ Synchronisation plus subtile
+
+---
+
+## ADR-004 — Isolation OCR via CLI externe
+
+### Contexte
+
+L’intégration directe d’un moteur OCR natif dans la JVM :
+
+* augmente le risque de crash
+* complexifie le packaging
+* réduit la flexibilité
+
+### Décision
+
+Isoler l’OCR dans un exécutable CLI :
+
+* communication via stdin/stdout
+* timeout strict
+* parsing JSON
+* exit codes explicites
+
+### Conséquences
+
+✅ Isolation forte
+✅ Testabilité
+⚠️ Overhead process
+⚠️ Gestion fine des flux
+
+---
+
+## ADR-005 — WebSocket push avec ACK explicite
+
+### Contexte
+
+Le client mobile a besoin :
+
+* de feedback immédiat
+* de réconciliation fiable
+* de cohérence post-write
+
+### Décision
+
+Mettre en place :
+
+* push WebSocket
+* message incluant `version` et `serverTime`
+* ACK côté client
+
+### Conséquences
+
+✅ Cohérence maîtrisée
+✅ UX temps réel
+⚠️ Complexité de reconnexion
+⚠️ Gestion d’état plus avancée
+
+---
+
+## 🧠 Synthèse
+
+Les décisions prises privilégient :
+
+* résilience
+* isolation
+* scalabilité
+* robustesse production
+
+La simplicité initiale a été volontairement sacrifiée au profit de la cohérence système.
+
+---

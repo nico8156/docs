@@ -1,0 +1,116 @@
+---
+title: "Fragments — Architecture Showcase"
+---
+
+# Fragments — Architecture Showcase
+
+Fragments est une application mobile de découverte de coffee shops, conçue comme un **projet vitrine d’architecture moderne orientée production**.
+
+L’objectif n’est pas de démontrer un CRUD fonctionnel,
+mais d’exposer des **choix d’architecture conscients**, motivés par des contraintes réelles :
+
+* réseau mobile instable
+* cohérence distribuée
+* mises à jour en temps réel
+* évolutivité par bounded contexts
+
+---
+
+## 🎯 Objectif
+
+Démontrer la maîtrise de :
+
+* Domain-Driven Design (DDD)
+* Architecture hexagonale (Ports & Adapters)
+* CQRS complet (write → outbox → projection → read)
+* Event-driven via Kafka
+* WebSocket push avec ACK explicite
+* Outbox client (retry/backoff + idempotence)
+* Tests E2E avec Testcontainers
+* Gestion des conflits via versioning serveur
+
+---
+
+## 🧠 Ce que ce projet démontre
+
+### 1. Découpage par bounded contexts
+
+* AuthContext
+* UserContext
+* CoffeeContext
+* SocialContext
+
+Chaque contexte est :
+
+* isolé
+* testable
+* découplé
+* évolutif indépendamment
+
+---
+
+### 2. Gestion fiable des writes
+
+Les commandes ne sont jamais publiées directement.
+
+Elles passent par une **Outbox persistée**, garantissant :
+
+* idempotence
+* résilience aux crashs
+* delivery at-least-once
+* absence de double write
+* compatibilité avec une architecture distribuée
+
+---
+
+### 3. Lecture optimisée pour mobile
+
+Le read model est :
+
+* dénormalisé
+* versionné
+* orienté UX
+* optimisé pour faible latence
+
+La cohérence forte est volontairement remplacée par une cohérence éventuelle contrôlée.
+
+---
+
+### 4. Stratégie offline & réseau instable
+
+Côté mobile :
+
+* Outbox client persistée
+* Retry exponentiel avec jitter
+* Squash des commandes `Like.Set`
+* Optimistic UI avec correction serveur
+* Reconciliation post-ACK WebSocket
+
+---
+
+## ⚖️ Trade-offs assumés
+
+* At-least-once + idempotence plutôt que exactly-once
+* Complexité architecturale supérieure à un CRUD simple
+* Projection eventual consistency assumée
+* Séparation stricte write/read au prix d’un peu plus de code
+* Observabilité nécessaire pour diagnostiquer les flux distribués
+
+---
+
+## 🏗️ Pourquoi ce projet est intéressant
+
+Ce projet montre :
+
+* Capacité à penser système
+* Capacité à documenter des décisions
+* Capacité à assumer des compromis
+* Capacité à préparer un système pour l’échelle
+* Capacité à gérer des problématiques réelles (mobile + temps réel + distribution)
+
+---
+
+> Ce projet n’est pas une application de café.
+> C’est une démonstration de maturité architecturale orientée production.
+
+---

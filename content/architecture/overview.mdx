@@ -1,0 +1,23 @@
+# Architecture Overview
+
+```mermaid
+flowchart LR
+  RN[React Native / Expo] -->|HTTP| GW[API Gateway]
+  RN -->|WS| WS[WebSocket Gateway]
+
+  subgraph Backend
+    GW --> AUTH[Auth Context]
+    GW --> USER[User Context]
+    GW --> COFFEE[Coffee Context]
+    GW --> SOCIAL[Social Context]
+
+    SOCIAL -->|Command| WRITE[Write Model]
+    WRITE --> OUTBOX[Outbox Table]
+    OUTBOX -->|Kafka| K[(Kafka)]
+    K --> PROJ[Projection Consumer]
+    PROJ --> READ[Read Model]
+    READ --> GW
+
+    PROJ -->|WS push| WS
+  end
+

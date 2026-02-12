@@ -1,0 +1,115 @@
+---
+title: "Testing strategy"
+---
+
+---
+
+# Testing Strategy
+
+La robustesse d’un système distribué repose autant sur les tests que sur l’architecture.
+
+---
+
+## 🎯 Objectif
+
+Valider :
+
+* les invariants métier
+* la cohérence write → outbox → projection
+* l’idempotence
+* les flows critiques E2E
+
+---
+
+## 🧪 1. Tests unitaires
+
+Couvrent :
+
+* agrégats
+* règles métier
+* validations
+* invariants
+
+Approche :
+
+* TDD
+* objets valeur immutables
+* pas de dépendances externes
+
+---
+
+## 🔗 2. Tests d’intégration
+
+Couvrent :
+
+* persistence JPA
+* transaction write + outbox
+* mapping DB
+
+Objectif :
+
+Garantir que write + event sont atomiques.
+
+---
+
+## 🐳 3. Tests E2E (Testcontainers)
+
+Infrastructure embarquée :
+
+* MySQL
+* Kafka
+
+Flow testé :
+
+1. Envoi d’une commande
+2. Vérification insertion outbox
+3. Consommation Kafka
+4. Mise à jour projection
+5. Vérification read model
+
+---
+
+## 🔁 4. Tests d’idempotence
+
+Scénarios :
+
+* même commandId envoyé 2 fois
+* retry simulé
+* double publication Kafka
+
+Résultat attendu :
+
+Aucun effet secondaire supplémentaire.
+
+---
+
+## 📱 5. Tests côté client
+
+Validation :
+
+* enqueue correct
+* squash fonctionnel
+* retry backoff
+* réconciliation post-ACK
+
+---
+
+## 🧠 Philosophie
+
+* Tester les invariants métier en priorité
+* Tester les frontières système
+* Tester les scénarios d’échec
+* Tester la résilience
+
+---
+
+## 🏁 Résultat
+
+Un système :
+
+* prévisible
+* contrôlé
+* maintenable
+* prêt pour l’évolution
+
+---

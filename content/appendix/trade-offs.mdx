@@ -1,0 +1,135 @@
+---
+title: "Trade-offs"
+---
+
+---
+
+## 1️⃣ CQRS + Outbox
+
+### ✅ Gains
+
+* Isolation claire du write et du read
+* Résilience aux crashs
+* Idempotence maîtrisée
+* Compatibilité système distribué
+* Rebuild possible du read model
+
+### ⚠️ Coûts
+
+* Complexité accrue
+* Eventual consistency
+* Besoin d’observabilité
+* Plus de code à maintenir
+
+### 🎯 Pourquoi ce choix ?
+
+Le projet vise la robustesse production et la scalabilité horizontale.
+Un CRUD simple aurait été plus court, mais non représentatif d’un système réel.
+
+---
+
+## 2️⃣ Eventual Consistency
+
+### ✅ Gains
+
+* Scalabilité
+* Découplage fort
+* Résilience aux défaillances partielles
+
+### ⚠️ Coûts
+
+* Latence de propagation
+* Nécessité de versioning
+* Réconciliation côté client
+
+### 🎯 Pourquoi ce choix ?
+
+En environnement mobile et distribué, la cohérence forte devient rapidement un goulot d’étranglement.
+
+---
+
+## 3️⃣ Outbox Client
+
+### ✅ Gains
+
+* Expérience fluide offline
+* Aucune perte d’action utilisateur
+* Retry automatique
+
+### ⚠️ Coûts
+
+* Complexité front-end
+* Gestion fine du cycle de vie
+* Synchronisation plus sophistiquée
+
+### 🎯 Pourquoi ce choix ?
+
+Les réseaux mobiles ne sont pas fiables.
+Ignorer ce fait conduit à une UX fragile.
+
+---
+
+## 4️⃣ CLI externe pour OCR
+
+### ✅ Gains
+
+* Isolation technologique
+* Séparation des responsabilités
+* Gestion claire des erreurs système
+
+### ⚠️ Coûts
+
+* Overhead process
+* Complexité d’intégration
+* Besoin de timeout strict
+
+### 🎯 Pourquoi ce choix ?
+
+L’isolation réduit le risque de crash JVM et facilite l’évolution du moteur OCR.
+
+---
+
+## 5️⃣ WebSocket Push avec ACK
+
+### ✅ Gains
+
+* Feedback temps réel
+* Réconciliation explicite
+* UX cohérente
+
+### ⚠️ Coûts
+
+* Gestion d’état plus complexe
+* Gestion des reconnexions
+* Synchronisation client/serveur
+
+### 🎯 Pourquoi ce choix ?
+
+Le temps réel améliore fortement l’expérience utilisateur.
+Le push + ACK garantit la cohérence côté client.
+
+---
+
+## 🧠 Philosophie globale
+
+Ce projet privilégie :
+
+* Robustesse > simplicité
+* Résilience > immédiateté
+* Scalabilité > rapidité d’implémentation
+* Clarté des responsabilités > couplage implicite
+
+---
+
+## 🏁 Conclusion
+
+Cette architecture n’est pas la plus simple possible.
+
+Elle est la plus cohérente avec :
+
+* un système distribué
+* un client mobile
+* une exigence de résilience
+* une vision orientée production
+
+---
