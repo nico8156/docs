@@ -1,3 +1,5 @@
+![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+
 # Fragments — Architecture Showcase (Docs)
 
 Fragments est un projet vitrine de **conception orientée production** :  
@@ -37,5 +39,4 @@ La documentation est générée avec **Next.js + Nextra** et contient :
 - Node.js 20+
 - npm
 
-![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
 
