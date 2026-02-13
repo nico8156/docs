@@ -36,3 +36,6 @@ La documentation est générée avec **Next.js + Nextra** et contient :
 ### Prérequis
 - Node.js 20+
 - npm
+
+![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+
