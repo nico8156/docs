@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+const CONTACT = {
+	email: 'nmaldiney@gmail.com',
+	linkedIn: 'https://www.linkedin.com/in/nicolas-maldiney-devweb'
+}
+
 export default function Home() {
 	return (
 		<div className="min-h-screen bg-[#0A0705] text-[#F4EDE6]">
@@ -10,12 +15,21 @@ export default function Home() {
 					Fragments — Architecture Showcase
 				</div>
 
-				<Link
-					href="/docs"
-					className="rounded-full border border-[#2D231C] px-5 py-2 text-sm font-medium hover:bg-[#15100E] transition"
-				>
-					Documentation
-				</Link>
+				<div className="flex items-center gap-3">
+					<Link
+						href="/docs/services"
+						className="rounded-full border border-[#2D231C] px-4 py-2 text-sm font-medium hover:bg-[#15100E] transition"
+					>
+						Services
+					</Link>
+
+					<Link
+						href="/docs"
+						className="rounded-full border border-[#2D231C] px-5 py-2 text-sm font-medium hover:bg-[#15100E] transition"
+					>
+						Documentation
+					</Link>
+				</div>
 			</header>
 
 			{/* HERO */}
@@ -39,9 +53,9 @@ export default function Home() {
 						</h1>
 
 						<p className="mt-6 text-lg text-[#B7A69A] leading-relaxed max-w-xl">
-							Fragments démontre une architecture orientée production :
-							séparation write/read, outbox transactionnelle, WebSocket avec
-							ACK, idempotence mobile et projections rebuildables.
+							Fragments est un projet vitrine orienté production : séparation write/read,
+							outbox transactionnelle, WebSocket avec ACK, idempotence mobile et projections
+							rebuildables — le tout documenté et testé.
 						</p>
 
 						<div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -57,8 +71,17 @@ export default function Home() {
 								href="/docs/appendix/trade-offs"
 								className="rounded-full px-6 py-3 text-sm font-semibold border border-[#2D231C] hover:bg-[#15100E] transition"
 							>
-								Voir les décisions
+								Décisions & compromis
 							</Link>
+
+							<a
+								href={`${CONTACT.linkedIn}`}
+								target="_blank"
+								rel="noreferrer"
+								className="rounded-full px-6 py-3 text-sm font-semibold border border-[#2D231C] hover:bg-[#15100E] transition"
+							>
+								LinkedIn
+							</a>
 						</div>
 
 						<div className="mt-12 grid gap-4 sm:grid-cols-2 text-sm text-[#8C7A70]">
@@ -71,19 +94,17 @@ export default function Home() {
 
 					{/* RIGHT — PREMIUM DEVICE */}
 					<div className="relative flex justify-center">
-						{/* halo */}
 						<div
 							className="absolute h-[450px] w-[450px] rounded-full blur-3xl"
 							style={{ background: 'rgba(200,106,58,0.15)' }}
 						/>
 
-						{/* device wrapper */}
 						<div className="relative transform rotate-3 scale-[0.96] transition duration-700 hover:rotate-0 hover:scale-100">
 							<div className="h-[620px] w-[300px] rounded-[42px] border border-[#2D231C] bg-black p-3 shadow-2xl">
 								<div className="h-full w-full overflow-hidden rounded-[32px]">
 									<Image
 										src="/screens/map.png"
-										alt="Fragments map clustering"
+										alt="Fragments — map clustering"
 										width={600}
 										height={1200}
 										className="object-cover"
@@ -95,7 +116,7 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* FEATURE SECTION */}
+				{/* FEATURES */}
 				<section className="mt-36">
 					<h2 className="text-3xl font-semibold">
 						Contraintes réelles, solutions concrètes
@@ -104,10 +125,9 @@ export default function Home() {
 					<div className="mt-16 grid gap-16 md:grid-cols-2">
 						<Feature
 							title="Vérification de ticket (OCR)"
-							desc="Pipeline robuste avec validation serveur, idempotence et reprise automatique."
+							desc="Workflow robuste : retry safe, validation serveur, reprise automatique."
 							image="/screens/ticket.png"
 						/>
-
 						<Feature
 							title="Read model dénormalisé"
 							desc="Projection rebuildable, versionnée, adaptée à la latence mobile."
@@ -116,28 +136,57 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* CTA FINAL */}
+				{/* CTA CONTACT */}
 				<section className="mt-36 border-t border-[#2D231C] pt-20">
-					<h2 className="text-3xl font-semibold">
-						Architecture pensée pour durer.
-					</h2>
+					<h2 className="text-3xl font-semibold">Disponible pour CDI ou missions.</h2>
 
 					<p className="mt-6 text-[#B7A69A] max-w-2xl">
-						Chaque décision est documentée. Chaque compromis est assumé.
-						Ce projet illustre une capacité à concevoir des systèmes robustes,
-						évolutifs et maintenables.
+						Si vous cherchez un profil full-stack à dominante backend, avec une forte sensibilité
+						architecture (DDD/CQRS/outbox, résilience mobile, tests E2E), je serai ravi d’échanger.
 					</p>
 
-					<div className="mt-10">
-						<Link
-							href="/docs"
-							className="rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.03]"
+					<div className="mt-10 flex flex-col gap-4 sm:flex-row">
+						<a
+							href={`mailto:${CONTACT.email}?subject=Fragments%20—%20Contact`}
+							className="rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02]"
 							style={{ backgroundColor: '#C86A3A' }}
 						>
-							Accéder à la documentation complète
+							Me contacter
+						</a>
+
+						<Link
+							href="/docs/cv"
+							className="rounded-full px-6 py-3 text-sm font-semibold border border-[#2D231C] hover:bg-[#15100E] transition"
+						>
+							Voir mon CV (PDF)
+						</Link>
+
+						<Link
+							href="/docs/about"
+							className="rounded-full px-6 py-3 text-sm font-semibold border border-[#2D231C] hover:bg-[#15100E] transition"
+						>
+							À propos
 						</Link>
 					</div>
+
+					<div className="mt-10 text-sm text-[#8C7A70]">
+						LinkedIn :{' '}
+						<a className="underline hover:text-[#B7A69A]" href={CONTACT.linkedIn} target="_blank" rel="noreferrer">
+							nicolas-maldiney-devweb
+						</a>{' '}
+						· Email :{' '}
+						<a className="underline hover:text-[#B7A69A]" href={`mailto:${CONTACT.email}`}>
+							{CONTACT.email}
+						</a>
+					</div>
 				</section>
+
+				<footer className="mt-14 text-sm text-[#8C7A70]">
+					<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+						<span>Fragments — Docs & Architecture</span>
+						<span className="text-xs">Next.js + Nextra</span>
+					</div>
+				</footer>
 			</main>
 		</div>
 	)
@@ -172,22 +221,15 @@ function Feature({
 				<div className="relative transform rotate-2 scale-[0.97] transition duration-700 hover:rotate-0 hover:scale-100">
 					<div className="h-[520px] w-[260px] rounded-[36px] border border-[#2D231C] bg-black p-3 shadow-xl">
 						<div className="h-full w-full overflow-hidden rounded-[28px]">
-							<Image
-								src={image}
-								alt={title}
-								width={600}
-								height={1200}
-								className="object-cover"
-							/>
+							<Image src={image} alt={title} width={600} height={1200} className="object-cover" />
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<h3 className="mt-8 text-xl font-semibold text-center">{title}</h3>
-			<p className="mt-3 text-[#B7A69A] text-center max-w-md mx-auto">
-				{desc}
-			</p>
+			<p className="mt-3 text-[#B7A69A] text-center max-w-md mx-auto">{desc}</p>
 		</div>
 	)
 }
+

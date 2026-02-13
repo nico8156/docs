@@ -1,0 +1,41 @@
+---
+title: "Social Context"
+---
+
+# Social Context
+
+## Rôle
+
+Gérer les interactions sociales :
+
+- likes (count + me)
+- commentaires (create/update/delete)
+- temps réel via WebSocket
+- cohérence en présence de retry réseau
+
+## Pourquoi CQRS + Outbox ici
+
+Le social est un domaine “eventful” :
+
+- beaucoup de writes
+- read optimisé mobile
+- nécessité de push temps réel
+- risque de double write / double publish
+
+CQRS permet :
+- write model transactionnel (invariants + outbox)
+- read model dénormalisé (UX)
+- projection via Kafka
+- rebuild du read model
+
+## Garanties
+
+- at-least-once + idempotence
+- versioning pour éviter les conflits
+- push WebSocket après projection (+ ACK côté client)
+
+## Tests
+
+- E2E : commande → outbox → Kafka → projection → read
+- idempotence : même commandId rejoué sans effets secondaires
+

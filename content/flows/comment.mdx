@@ -1,0 +1,27 @@
+---
+title: "Flow — Comment"
+---
+
+# Flow — Comment
+
+## Objectif
+
+Permettre create/edit/delete avec :
+
+- idempotence
+- cohérence read model
+- temps réel
+
+## Flux
+
+1. Command `Comment.Create/Edit/Delete` (mobile → API)
+2. Write side valide + persiste + outbox
+3. Event publié via Kafka
+4. Projection met à jour le read model
+5. WebSocket push + ACK pour réconciliation mobile
+
+## Garanties
+
+- retry safe (commandId)
+- read optimisé (dénormalisé)
+

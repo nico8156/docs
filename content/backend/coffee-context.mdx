@@ -1,0 +1,36 @@
+---
+title: "Coffee Context"
+---
+
+# Coffee Context
+
+## Rôle
+
+Servir un **read model** optimisé pour l’expérience mobile :
+
+- liste de cafés
+- photos
+- horaires
+- informations d’affichage (lat/lon, tags, etc.)
+
+## Pourquoi “read-first”
+
+L’app mobile a besoin de :
+
+- faible latence
+- payload stable
+- données dénormalisées (UX-driven)
+
+Le Coffee Context sert donc un modèle orienté affichage plutôt qu’un modèle CRUD “pur”.
+
+## API (read)
+
+- `GET /api/coffees`
+- `GET /api/coffees/photos`
+- `GET /api/coffees/opening-hours`
+
+## Trade-offs
+
+- modèle read dénormalisé (volontaire)
+- versioning et rebuild possibles si la source change
+

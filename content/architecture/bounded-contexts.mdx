@@ -1,0 +1,90 @@
+---
+title: "Bounded Contexts"
+---
+
+# Bounded Contexts
+
+Fragments est structuré autour de **bounded contexts clairement isolés**.  
+Chaque contexte possède :
+
+- son modèle métier
+- ses invariants
+- ses ports (interfaces)
+- ses adapters (infra)
+- son propre cycle d’évolution
+
+L’objectif est d’éviter un modèle anémique global et un couplage transversal.
+
+---
+
+## Contexts définis
+
+### Auth Context
+
+Responsable de l’authentification et de l’émission des tokens applicatifs.
+
+- Login
+- Refresh
+- Validation
+
+Il ne connaît pas les profils métier.
+
+---
+
+### User Context
+
+Responsable des informations utilisateur internes à l’application.
+
+- Identité applicative
+- Préférences
+- Métadonnées
+
+Il ne gère ni l’authentification ni le social.
+
+---
+
+### Coffee Context
+
+Responsable du catalogue coffee shops.
+
+- Données géographiques
+- Photos
+- Horaires
+- Tags
+
+Ce contexte est principalement orienté **read model optimisé mobile**.
+
+---
+
+### Social Context
+
+Responsable des interactions :
+
+- Likes
+- Commentaires
+- Temps réel
+- Projections
+- Idempotence
+
+C’est le contexte le plus “eventful”, nécessitant CQRS + Outbox.
+
+---
+
+## Pourquoi ce découpage ?
+
+- Réduction du couplage
+- Évolution indépendante
+- Tests plus ciblés
+- Responsabilités explicites
+- Préparation à une architecture microservices
+
+---
+
+## Trade-offs
+
+- Plus de structure
+- Plus de code
+- Nécessite une discipline forte
+
+Mais le gain en lisibilité et en évolutivité justifie cette complexité.
+

@@ -1,0 +1,24 @@
+---
+title: "Runbook — Déploiement"
+---
+
+# Runbook — Déploiement
+
+## Objectif
+
+Déployer de manière reproductible.
+
+## Stratégie
+
+- build backend
+- déploiement containerisé (recommandé)
+- config via variables d’environnement
+- migration DB contrôlée
+- monitoring outbox + consumer lag
+
+## Risques & contrôles
+
+- vérifier backlog outbox
+- vérifier consumer lag Kafka
+- vérifier health endpoints
+

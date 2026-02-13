@@ -1,0 +1,22 @@
+---
+title: "Flow — Auth"
+---
+
+# Flow — Auth
+
+## Objectif
+
+Assurer un login fiable et réutilisable dans une app mobile (réseau instable, refresh, relance).
+
+## Étapes
+
+1. Login via provider (ex: Google)
+2. Échange du token provider côté backend
+3. Émission token applicatif
+4. Stockage sécurisé côté mobile
+5. Refresh / relogin selon expiration
+
+## Trade-offs
+
+- priorité stabilité & sécurité plutôt que “flow le plus court”
+

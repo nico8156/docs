@@ -1,6 +1,9 @@
 {
   "index": "Overview",
   "00_pitch": "Pitch",
+  "services": "Services",
+  "about": "À propos",
+  "cv": "CV (PDF)",
   "architecture": "Architecture",
   "backend": "Backend",
   "frontend": "Frontend",

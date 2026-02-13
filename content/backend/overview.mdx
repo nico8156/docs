@@ -1,0 +1,37 @@
+---
+title: "Backend — Vue d’ensemble"
+---
+
+# Backend — Vue d’ensemble
+
+Le backend est conçu comme un système **découpé par bounded contexts**, avec une architecture **hexagonale** et des flux **CQRS + Outbox** sur les domaines qui le nécessitent (social, ticket verify).
+
+## Objectifs
+
+- Séparer clairement **write** et **read** lorsque l’UX mobile impose une lecture optimisée
+- Garantir des writes fiables via **Outbox transactionnelle**
+- Permettre une évolution indépendante des contexts
+- Rendre les flows testables (unit, intégration, E2E Testcontainers)
+
+## Bounded contexts
+
+- **Auth Context** : identité, tokens, social login
+- **User Context** : profils, préférences, identités applicatives
+- **Coffee Context** : catalogue coffee shops (read optimisé)
+- **Social Context** : likes, commentaires, temps réel, idempotence, projections
+
+## Patterns clés
+
+- Ports & Adapters (hexagonal)
+- CQRS (sur domaines “eventful”)
+- Outbox (atomicité DB + event)
+- Kafka (bus d’événements)
+- WebSocket (push + ACK côté client)
+- Versioning (résolution de conflits / reconcilation)
+
+## Tests
+
+- **Unit** : invariants métier
+- **Intégration** : JPA/transactions
+- **E2E** : MySQL + Kafka via Testcontainers
+

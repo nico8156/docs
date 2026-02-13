@@ -1,0 +1,94 @@
+---
+title: "Flow — Like"
+---
+
+# Flow — Like
+
+Le Like est un exemple représentatif d’un domaine nécessitant :
+
+- idempotence
+- temps réel
+- cohérence eventual
+- robustesse face aux retries mobile
+
+---
+
+## Objectif
+
+Permettre à un utilisateur de :
+
+- liker / unliker un café
+- voir le compteur mis à jour
+- obtenir un retour temps réel fiable
+- éviter les doubles effets (double tap / retry)
+
+---
+
+## Étapes
+
+1. Mobile envoie une commande `Like.Set`
+2. Write model valide l’invariant
+3. Persist + Outbox dans la même transaction
+4. Event publié via Kafka
+5. Projection met à jour le read model
+6. WebSocket push vers les clients concernés
+7. Mobile reconcile via version
+
+---
+
+## Pourquoi CQRS ici ?
+
+- Le write doit être transactionnel
+- Le read doit être optimisé pour l’UX
+- Le compteur et le statut "me" sont dénormalisés
+- Le mobile peut retry sans créer de double like
+
+---
+
+## Idempotence
+
+Chaque commande possède :
+
+- un `commandId`
+- un `userId`
+- un `coffeeId`
+
+Si la commande est rejouée, le système garantit :
+
+- pas de double incrément
+- pas de divergence du compteur
+
+---
+
+## Read Model exposé
+
+```json
+{
+  "count": 42,
+  "me": true,
+  "version": 12,
+  "serverTime": "2026-02-12T12:30:00Z"
+}
+
+Ce modèle est orienté UX et reconciliation mobile.
+
+---
+
+## Garanties système
+
+* At-least-once delivery
+* Idempotence write side
+* Projection rebuildable
+* Versioning pour éviter les conflits
+* Push temps réel + ACK côté client
+
+---
+
+## Trade-offs
+
+* Eventual consistency assumée
+* Complexité supérieure à un CRUD
+* Nécessite discipline sur les invariants
+
+
+---

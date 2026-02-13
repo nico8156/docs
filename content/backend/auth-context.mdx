@@ -1,0 +1,33 @@
+---
+title: "Auth Context"
+---
+
+# Auth Context
+
+## Rôle
+
+Fournir un point d’entrée fiable pour :
+
+- authentifier l’utilisateur
+- émettre/valider des tokens
+- intégrer un provider (Google) pour login social
+
+## Décisions
+
+- Séparer Auth du reste pour éviter un couplage “utilisateur = auth”
+- Garder une interface claire côté mobile (flow stable)
+- Préparer l’évolution (rotation keys, refresh, etc.)
+
+## Flux (haut niveau)
+
+1. Mobile initie le login (provider)
+2. Backend vérifie/échange le token provider
+3. Backend émet un token applicatif
+4. Le mobile stocke et rafraîchit via le mécanisme prévu
+
+## Points de vigilance
+
+- gestion des refresh / expiration
+- sécurité stockage côté mobile
+- idempotence des callbacks / retries réseau
+

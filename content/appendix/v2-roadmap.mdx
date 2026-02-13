@@ -70,7 +70,21 @@ Objectif : préparer l’architecture à l’échelle.
 Objectif : solidifier la dimension opérationnelle.
 
 ---
+## 6. Style de code plus inspiré FP (pragmatique)
 
+Sans chercher à “réécrire en FP”, l’objectif serait d’adopter progressivement des pratiques qui améliorent
+la **robustesse** et la **testabilité** :
+
+- **Séparation pur/impur** : isoler les effets (I/O, réseau, temps) derrière des ports, garder un cœur métier le plus pur possible
+- **Écriture plus descriptive** : fonctions petites, composables, orientées transformation de données
+- **Gestion d’erreurs explicite** : éviter les exceptions comme contrôle de flux, préférer des retours typés (`Result`/`Either`) et des erreurs métier structurées
+- **Modélisation par types** : réduire les états invalides (value objects, états explicites, invariants)
+- **Tests plus simples** : cœur métier testable sans mocks lourds, effets testés séparément en intégration/E2E
+
+> Trade-off assumé : un peu plus de verbosité (types / wrappers), mais une baisse de complexité cognitive
+> et une meilleure fiabilité en production.
+
+---
 ## Conclusion
 
 L’architecture actuelle est robuste et cohérente.
