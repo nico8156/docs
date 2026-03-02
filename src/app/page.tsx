@@ -12,7 +12,7 @@ export default function Home() {
 			{/* NAV */}
 			<header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
 				<div className="text-sm font-semibold tracking-tight">
-					Fragments — Architecture Showcase
+					Fragments — Backend Showcase
 				</div>
 
 				<div className="flex items-center gap-3">
@@ -44,18 +44,19 @@ export default function Home() {
 								color: '#C86A3A'
 							}}
 						>
-							CQRS • Outbox • Event-Driven • Mobile Resilience
+							Java • Spring Boot • REST • Tests • Event-driven
 						</div>
 
 						<h1 className="mt-8 text-4xl font-semibold tracking-tight sm:text-6xl leading-tight">
-							Concevoir des systèmes distribués{' '}
-							<span style={{ color: '#C86A3A' }}>robustes</span>.
+							Développer des backends{' '}
+							<span style={{ color: '#C86A3A' }}>robustes et testés</span>.
 						</h1>
 
 						<p className="mt-6 text-lg text-[#B7A69A] leading-relaxed max-w-xl">
-							Fragments est un projet vitrine orienté production : séparation write/read,
-							outbox transactionnelle, WebSocket avec ACK, idempotence mobile et projections
-							rebuildables — le tout documenté et testé.
+							Fragments est un projet backend Spring Boot orienté production :
+							conception d’APIs REST, gestion explicite des erreurs, tests E2E,
+							et structuration progressive vers des architectures plus avancées
+							(CQRS, outbox transactionnelle).
 						</p>
 
 						<div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -85,14 +86,14 @@ export default function Home() {
 						</div>
 
 						<div className="mt-12 grid gap-4 sm:grid-cols-2 text-sm text-[#8C7A70]">
-							<Stat label="Write model" value="Isolé & transactionnel" />
-							<Stat label="Read model" value="Optimisé mobile" />
-							<Stat label="Delivery" value="At-least-once + idempotence" />
+							<Stat label="APIs REST" value="Structurées & sécurisées" />
+							<Stat label="Persistance" value="JPA / PostgreSQL" />
+							<Stat label="Delivery" value="Kafka + idempotence" />
 							<Stat label="Tests" value="E2E + Testcontainers" />
 						</div>
 					</div>
 
-					{/* RIGHT — PREMIUM DEVICE */}
+					{/* RIGHT DEVICE */}
 					<div className="relative flex justify-center">
 						<div
 							className="absolute h-[450px] w-[450px] rounded-full blur-3xl"
@@ -104,7 +105,7 @@ export default function Home() {
 								<div className="h-full w-full overflow-hidden rounded-[32px]">
 									<Image
 										src="/screens/map.png"
-										alt="Fragments — map clustering"
+										alt="Fragments — mobile frontend"
 										width={600}
 										height={1200}
 										className="object-cover"
@@ -116,33 +117,14 @@ export default function Home() {
 					</div>
 				</section>
 
-				{/* FEATURES */}
-				<section className="mt-36">
-					<h2 className="text-3xl font-semibold">
-						Contraintes réelles, solutions concrètes
-					</h2>
-
-					<div className="mt-16 grid gap-16 md:grid-cols-2">
-						<Feature
-							title="Vérification de ticket (OCR)"
-							desc="Workflow robuste : retry safe, validation serveur, reprise automatique."
-							image="/screens/ticket.png"
-						/>
-						<Feature
-							title="Read model dénormalisé"
-							desc="Projection rebuildable, versionnée, adaptée à la latence mobile."
-							image="/screens/detail.png"
-						/>
-					</div>
-				</section>
-
 				{/* CTA CONTACT */}
 				<section className="mt-36 border-t border-[#2D231C] pt-20">
-					<h2 className="text-3xl font-semibold">Disponible pour CDI ou missions.</h2>
+					<h2 className="text-3xl font-semibold">Disponible pour CDI ou mission backend.</h2>
 
 					<p className="mt-6 text-[#B7A69A] max-w-2xl">
-						Si vous cherchez un profil full-stack à dominante backend, avec une forte sensibilité
-						architecture (DDD/CQRS/outbox, résilience mobile, tests E2E), je serai ravi d’échanger.
+						Profil backend Java / Spring Boot basé à Rennes.
+						Autonome sur APIs REST, persistance SQL et tests d’intégration.
+						Ouvert au présentiel ou remote.
 					</p>
 
 					<div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -160,13 +142,6 @@ export default function Home() {
 						>
 							Voir mon CV (PDF)
 						</Link>
-
-						<Link
-							href="/docs/about"
-							className="rounded-full px-6 py-3 text-sm font-semibold border border-[#2D231C] hover:bg-[#15100E] transition"
-						>
-							À propos
-						</Link>
 					</div>
 
 					<div className="mt-10 text-sm text-[#8C7A70]">
@@ -183,7 +158,7 @@ export default function Home() {
 
 				<footer className="mt-14 text-sm text-[#8C7A70]">
 					<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-						<span>Fragments — Docs & Architecture</span>
+						<span>Fragments — Backend Java Showcase</span>
 						<span className="text-xs">Next.js + Nextra</span>
 					</div>
 				</footer>
@@ -200,36 +175,3 @@ function Stat({ label, value }: { label: string; value: string }) {
 		</div>
 	)
 }
-
-function Feature({
-	title,
-	desc,
-	image
-}: {
-	title: string
-	desc: string
-	image: string
-}) {
-	return (
-		<div>
-			<div className="relative flex justify-center">
-				<div
-					className="absolute h-[350px] w-[350px] rounded-full blur-3xl"
-					style={{ background: 'rgba(200,106,58,0.12)' }}
-				/>
-
-				<div className="relative transform rotate-2 scale-[0.97] transition duration-700 hover:rotate-0 hover:scale-100">
-					<div className="h-[520px] w-[260px] rounded-[36px] border border-[#2D231C] bg-black p-3 shadow-xl">
-						<div className="h-full w-full overflow-hidden rounded-[28px]">
-							<Image src={image} alt={title} width={600} height={1200} className="object-cover" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<h3 className="mt-8 text-xl font-semibold text-center">{title}</h3>
-			<p className="mt-3 text-[#B7A69A] text-center max-w-md mx-auto">{desc}</p>
-		</div>
-	)
-}
-
